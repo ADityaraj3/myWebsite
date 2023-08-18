@@ -3,7 +3,7 @@ import {
     getUser,
     getUserFriends,
     addRemoveFriends,
-} from "../controllers/user.js";
+} from "../controllers/users.js";
 import {
     verifyToken,
 } from "../middleware/auth.js";
@@ -11,7 +11,7 @@ import {
 const router = express.Router();
 
 // Read
-
+// console.log("asdad")
 router.get("/:id",verifyToken,getUser);
 router.get("/:id/friends",verifyToken,getUserFriends);
 

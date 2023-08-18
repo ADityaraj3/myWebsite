@@ -12,10 +12,13 @@ import { register,login } from "./controllers/auth.js";
 import { error } from "console";
 import bcrypt from "bcrypt";
 import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/user.js";
+import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import { createPost } from "./controllers/posts.js";    
 import { verifyToken } from "./middleware/auth.js";
+import User from "./models/User.js";
+import Post from "./models/Posts.js";
+import { users,posts } from "./data/index.js";
 // Configurations
 
 const __filename = fileURLToPath(import.meta.url);
@@ -130,14 +133,17 @@ app.use("/users",userRoutes);
 app.use("/posts",postRoutes);
 // Mongoose Setup
 
-const PORT = process.env.PORT || 6001 ; 
+const PORT = process.env.PORT    ; 
 mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser : true,
     useUnifiedTopology : true,
 }).then(() => {
     app.listen(PORT, () => {
         console.log(`Server Port : ${PORT}`);
-    })
+    });
+    // Add data one time
+    // User.insertMany(users);
+    // Post.insertMany(posts);
 }).catch((error) => {
     console.log(`${error} did not connect`);
 });

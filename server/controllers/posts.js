@@ -58,7 +58,7 @@ export const likePost = async (req, res) => {
       const { id } = req.params;  // Destructuring assignment to extract "id" from request parameters.
       const { userId } = req.body;  // Destructuring assignment to extract "userId" from request body.
   
-      const post = Post.findById(id);
+      const post = await Post.findById(id);
       // Using "Post.findById" to retrieve the post document based on the provided "id".
   
       const isLiked = post.likes.get(userId);

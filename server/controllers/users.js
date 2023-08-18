@@ -28,6 +28,7 @@ export const getUserFriends = async (req, res) => {
         return { _id, firstName, lastName, occupation, location, picturePath };
       }
     );
+    res.status(200).json(formattedFriends);
     // Using the "map" function on the array of friend documents to create a new array of formatted friend information.
     // Each friend document is destructured to select specific properties (like _id, firstName, etc.).
     // The formatted information is returned as an object for each friend.
@@ -41,10 +42,10 @@ export const getUserFriends = async (req, res) => {
 export const addRemoveFriends = async (req, res) => {
   try {
     const { id, friendId } = req.params;
-    const user = User.findById(id);
-    const friend = User.findById(friendId);
+    const user = await User.findById(id);
+    const friend =await User.findById(friendId);
 
-    if (user.friend.includes(friendId)) {
+    if (user.friends.includes(friendId)) {
         // Check if the friendId is already in the user's friends list.
         user.friends = user.friends.filter((id) => id !== friendId);
         // If it is, remove the friendId from the user's friends list.
